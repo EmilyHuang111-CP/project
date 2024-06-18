@@ -35,7 +35,7 @@ def click():
 
 # Create main window
 root = tk.Tk()
-root.geometry("700x400")
+root.geometry("1000x700")
 root.title("Facility Statistics")
 root.resizable(False, False)
 
