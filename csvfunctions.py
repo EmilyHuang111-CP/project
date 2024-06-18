@@ -19,13 +19,18 @@ def combined_to_file():
     sorted_t.to_csv("active_sites.csv", sep=',', index=False, encoding='utf-8')
 
 
-# Gets a list of the active site ids and returns them
-def active_facility_id():
+# Gets the active site ids and names and returns them in a formatted list
+def active_facility_id_name():
     sorted_t = combined_active_facilities()
 
     id_list = sorted_t['facility_id'].to_string(index=False).split("\n")
+    name_list = sorted_t['facility_name'].to_string(index=False).split("\n")
 
-    for x in id_list:
-        id_list[id_list.index(x)] = x.strip().title()
+    final_list = []
 
-    return id_list
+    for x in range(len(id_list)):
+        id_list[x] = id_list[x].strip().title()
+        name_list[x] = name_list[x].strip().title()
+        final_list.append(id_list[x] + " - " + name_list[x])
+
+    return final_list
