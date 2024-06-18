@@ -1,8 +1,9 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
+from csvfunctions import *
 
 # Data for combobox
-options = active_facility_id()
+options = active_facility_id_name()
 
 # Function to filter combobox options based on input
 def search(event):
