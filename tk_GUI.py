@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 
 # Data for combobox
-options = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+options = active_facility_id()
 
 # Function to filter combobox options based on input
 def search(event):
@@ -39,7 +39,7 @@ root.title("Facility Statistics")
 root.resizable(False, False)
 
 # Label
-label = tk.Label(root, text="Please choose a month:")
+label = tk.Label(root, text="Please choose a facility:")
 label.pack()
 
 # Combobox
