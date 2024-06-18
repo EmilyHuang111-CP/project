@@ -1,10 +1,11 @@
 #import necessary packages
-import pandas as pd
+from csvfunctions import *
 
+combined_to_file()
 #find the path of the excel file from desktop
-excel_file = "/Users/emilyhuang/Desktop/combined data/combined everything.xlsx"
+csv_file = "active_sites.csv"
 #read the the excel file
-df = pd.read_excel(excel_file)
+df = pd.read_csv(csv_file)
 
 #get rid of whitespace from column names
 df.columns = df.columns.str.strip()
