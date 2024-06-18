@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-from jit import *
 from locator import *
 
 
@@ -25,18 +24,13 @@ def click():
     facility_name_var.set(f"{match_facility_name(selected_value)}")
     institution_name_var.set(f"{match_institution_name(selected_value)}")
     institution_id_var.set(f"{match_institution_id(selected_value)}")
-    # facility_name_var.set(f"hi")
-    # institution_name_var.set(f"hi")
-    # institution_id_var.set(f"hi")
+
 
     # Update label2 text
-    label2_text.set(f"Facility Name: {facility_name_var.get()}   Institution Name: {institution_name_var.get()}   Institution ID: {institution_id_var.get()}")
+    label2_text.set(f"Facility Name: {facility_name_var.get()}   Facility ID: {selected_value}   Institution Name: {institution_name_var.get()}   Institution ID: {institution_id_var.get()}")
 
     # Show label2
     label2.pack()
-
-    # # Show messagebox with selected month
-    # messagebox.showinfo("Selected Month", f"You selected: {selected_value}")
 
 # Create main window
 root = tk.Tk()
