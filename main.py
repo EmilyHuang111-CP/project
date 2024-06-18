@@ -21,17 +21,23 @@ def search(event):
 
 # Function to handle 'Find' button click
 def click():
-    selected_value = int(var.get().split(" ")[0])
-    facility_name_var.set(f"{match_facility_name(selected_value)}")
-    institution_name_var.set(f"{match_institution_name(selected_value)}")
-    institution_id_var.set(f"{match_institution_id(selected_value)}")
+    label2_text.set("")
+    sv = var.get().strip()
+    selected_value = int(sv.split(" ")[0])
+    try:
+        facility_name_var.set(f"{match_facility_name(selected_value)}")
+        institution_name_var.set(f"{match_institution_name(selected_value)}")
+        institution_id_var.set(f"{match_institution_id(selected_value)}")
 
 
-    # Update label2 text
-    label2_text.set(f"Facility Name: {facility_name_var.get()}   Facility ID: {selected_value}   Institution Name: {institution_name_var.get()}   Institution ID: {institution_id_var.get()}")
+        # Update label2 text
+        label2_text.set(f"Facility Name: {facility_name_var.get()}   Facility ID: {selected_value}   Institution Name: {institution_name_var.get()}   Institution ID: {institution_id_var.get()}")
 
-    # Show label2
-    label2.pack()
+        # Show label2
+        label2.pack()
+    except:
+        messagebox.showwarning("Entry not found", f"{sv} is not available as a facility.")
+
 
 # Create main window
 root = tk.Tk()
