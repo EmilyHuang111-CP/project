@@ -2,7 +2,7 @@
 from tkinterweb import HtmlFrame  # Assuming tkinterweb is imported correctly
 import tkinter as tk
 from tkinter import ttk, messagebox
-from jit import *  # Assuming jit module is imported correctly
+from locator import *
 
 # Function to retrieve active facility IDs and names
 options = active_facility_id_name()
@@ -21,19 +21,17 @@ def search(event):
 
 # Function to handle 'Find' button click
 def click():
-    selected_value = var.get()
-    facility_name_var.set(selected_value)
-    institution_name_var.set(selected_value)
-    institution_id_var.set(selected_value)
+    selected_value = int(var.get().split(" ")[0])
+    facility_name_var.set(f"{match_facility_name(selected_value)}")
+    institution_name_var.set(f"{match_institution_name(selected_value)}")
+    institution_id_var.set(f"{match_institution_id(selected_value)}")
 
-    # Update label2 text with selected facility information
-    label2_text.set(f"Facility Name: {facility_name_var.get()}   Institution Name: {institution_name_var.get()}   Institution ID: {institution_id_var.get()}")
+
+    # Update label2 text
+    label2_text.set(f"Facility Name: {facility_name_var.get()}   Facility ID: {selected_value}   Institution Name: {institution_name_var.get()}   Institution ID: {institution_id_var.get()}")
 
     # Show label2
     label2.pack()
-
-    # # Show messagebox with selected facility
-    # messagebox.showinfo("Selected Facility", f"You selected: {selected_value}")
 
 # Create main window
 root = tk.Tk()
