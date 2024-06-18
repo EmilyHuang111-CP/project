@@ -1,3 +1,5 @@
+import pandas as pd
+
 # Combines facility and institution csvs into one dataframe called active sites and returns the table sorted by institution id
 def combined_active_facilities():
     facility = pd.read_csv("facility.csv")
