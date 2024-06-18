@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-from csvfunctions import *
+from jit import *
+from locator import *
+
 
 # Data for combobox
 options = active_facility_id_name()
@@ -19,10 +21,13 @@ def search(event):
 
 # Function to handle enter button click
 def click():
-    selected_value = var.get()
-    facility_name_var.set(f"{selected_value}")
-    institution_name_var.set(f"{selected_value}")
-    institution_id_var.set(f"{selected_value}")
+    selected_value = int(var.get().split(" ")[0])
+    facility_name_var.set(f"{match_facility_name(selected_value)}")
+    institution_name_var.set(f"{match_institution_name(selected_value)}")
+    institution_id_var.set(f"{match_institution_id(selected_value)}")
+    # facility_name_var.set(f"hi")
+    # institution_name_var.set(f"hi")
+    # institution_id_var.set(f"hi")
 
     # Update label2 text
     label2_text.set(f"Facility Name: {facility_name_var.get()}   Institution Name: {institution_name_var.get()}   Institution ID: {institution_id_var.get()}")
@@ -63,8 +68,6 @@ label2 = tk.Label(root, textvariable=label2_text)
 enter_button = tk.Button(root, text='Find', command=click)
 enter_button.pack()
 
-# exit_button = tk.Button(root, text='Quit', command=root.destroy)
-# exit_button.pack()
 
 # Bindings
 drop.bind('<KeyRelease>', search)
