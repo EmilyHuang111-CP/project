@@ -25,8 +25,8 @@ def get_occurrences(rrule_string, dtstart_string):
                 #print(occurrence)
         print(total)
 
-    except Exception as Error:
-        print("Error:" + str(Error) +  "\nwith " + str(rrule_string) + " at " + str(dtstart_string))
+    except Exception as err:
+        print("Error:" + str(err) +  "\nwith " + str(rrule_string) + " at " + str(dtstart_string))
 
 
 
