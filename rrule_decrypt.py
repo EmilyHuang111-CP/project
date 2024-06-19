@@ -29,5 +29,5 @@ def get_occurrences(rrule_string, dtstart_string):
 
 
 
-# Example usage with your inputs:
+# Test:
 get_occurrences('RRULE:FREQ=DAILY;BYHOUR=08;BYMINUTE=00;COUNT=3', 'DTSTART:20211118T120700Z')
