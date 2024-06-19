@@ -22,7 +22,7 @@ def get_occurrences(rrule_string, dtstart_string):
                 if occurrence > now:
                     break
                 total += 1
-                print(occurrence)
+                #print(occurrence)
         print(total)
 
     except:
