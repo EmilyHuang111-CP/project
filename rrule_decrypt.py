@@ -16,7 +16,6 @@ def get_occurrences(rrule_string, dtstart_string):
 
         total = 0
         # Print each occurrence
-        print("Occurrences:")
         for occurrence in rule:
             if occurrence > now:
                 break
