@@ -25,7 +25,7 @@ def get_occurrences(rrule_string, dtstart_string):
         print(total)
 
     except:
-        print("Smth Happened")
+        print("Issue with " + str(rrule_string) + " at " + str(dtstart_string))
 
 
 
