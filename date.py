@@ -14,15 +14,7 @@ start_date = dt.datetime(2024, 6, 2, 10, 30, 00)
 
 
 if days_30 < start_date:
-    delta_diff = today - start_date
+    start_date = start
 else:
-    delta_diff = today - days_30
-
-print(delta_diff)
-
-daily = True
-
-if daily:
-    print(delta_diff.days)
-
+    start_date = days_30
 
