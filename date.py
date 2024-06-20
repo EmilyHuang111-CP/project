@@ -94,7 +94,7 @@ def handling_w(str_cron):
             for x in cl.monthcalendar(today.year, month):
                 print("p", x)
                 day = x[int((int(weekdy) - 2) % 7)]
-            # date_return.append(dt.date(day))
+            date_return.append(dt.date(today.year, month, day))
         print(date_return)
         return str_cron.replace(day_of_month, "*")
     else:
@@ -106,7 +106,7 @@ def handling_slash(str_cron):
 
 
 # try:
-input_lst = "0 23 7 2W * *".strip()
+input_lst = "0 23 7 * * 6#3 2023".strip()
 print("in", input_lst)
 str_cron = handling_seconds(input_lst)
 print("s", str_cron)
@@ -131,10 +131,10 @@ dates = []
 # today.date() >
 date = today
 
-if "#" in str_cron:
+if "#" in input_lst or "W" in input_lst:
     #while loop for as long as date is equal to or after start date
     for i in date_return:
-        print(i)
+        print("ii", i)
         if today.date() > i > start_date.date():
             print(i)
             dates.append(i)
