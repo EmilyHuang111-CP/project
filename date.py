@@ -5,11 +5,15 @@ import calendar as cl
 
 today = dt.datetime.now()
 
-days_30 = today + dt.timedelta(days=-30, hours=0)
-
 today = dt.datetime(2024, 1, 10, 10, 30, 00)
 
+days_30 = today + dt.timedelta(days=-30, hours=0)
+
+
+
 date_return = []
+
+years = []
 
 print("current", today)
 print(days_30)
@@ -29,10 +33,6 @@ def handling_seconds(input_l):
     input_l = input_l.split(" ")[1:]
     input_str = " ".join(input_l)
     return input_str
-
-
-def handling_years(input_l):
-    return input_l
 
 
 def handling_question_marks(input_l):
@@ -79,7 +79,9 @@ def handling_l(str_cron):
 def handling_year(str_cron):
     if len(str_cron.split(" ")) > 5:
         print("there's a year!")
-    print(str_cron.replace(str_cron.split(" ")[-1], ""))
+        years.append(str_cron.split(" ")[-1])
+        # for i in range(len(years)):
+        #     years[i] = years[i].split(",")
     return str_cron.replace(str_cron.split(" ")[-1], "")
 
 
@@ -92,11 +94,9 @@ def handling_slash(str_cron):
 
 
 try:
-    input_lst = "0 30 17 * 12 * 2008".strip()
+    input_lst = "0 30 * * * * 2023, 2024".strip()
     print(input_lst)
     str_cron = handling_seconds(input_lst)
-    print(str_cron)
-    str_cron = handling_years(str_cron)
     print(str_cron)
     str_cron = handling_question_marks(str_cron)
     print(str_cron)
@@ -125,10 +125,14 @@ try:
                 dates.append(i)
     else:
         while date > start_date:
+            print(date)
+            print(date.year)
+            print(years)
             schedule = cron_exp.schedule(date)
             prev_date = schedule.prev()
             date = prev_date
-            dates.append(date)
+            if str(date.year) in years:
+                dates.append(date)
 
     print(len(dates), dates)
 
