@@ -25,15 +25,14 @@ def match_start_date(facility_id):
 
 
 matched_rrule = match_rrule(facility_id)
-print(matched_rrule)
-
 matched_start_date = match_start_date(facility_id)
-print(matched_start_date)
+
+print(matched_rrule+matched_start_date)
+
+
 
 """result=df.loc[df['facility_id'] == facility_id,'rr_rule'].values[0]
 print(result)"""
-
-
 
 
 
