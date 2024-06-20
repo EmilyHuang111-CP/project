@@ -7,7 +7,7 @@ today = dt.datetime.now()
 
 calendar_obj = cl.Calendar()
 
-today = dt.datetime(2024, 1, 10, 10, 30, 00)
+today = dt.datetime(2024, 1, 2, 10, 30, 00)
 
 days_30 = today + dt.timedelta(days=-30, hours=0)
 
@@ -51,6 +51,10 @@ def handling_hash_marks(input_l):
         date_return = []
         for month in range(1, 13):
             days_in_month = []
+            for x in calendar_obj.itermonthdays4(today.year - 1, month):
+                # print(list(x))
+                if list(x)[3] == (int(day_week) - 2) % 7 and list(x)[1] == month:
+                    days_in_month.append(x)
             for x in calendar_obj.itermonthdays4(today.year, month):
                 # print(list(x))
                 if list(x)[3] == (int(day_week) - 2) % 7 and list(x)[1] == month:
@@ -70,17 +74,6 @@ def handling_month_names(str_cron):
     return str_cron
 
 
-def handling_l(str_cron):
-    ss = str_cron.split(' ')
-    if 'L' == ss[2]:
-        print("L only in day of month")
-    elif 'L' in ss[2]:
-        print("L in day of month")
-    elif 'L' in ss[4]:
-        ss[4] = "7"
-    return ' '.join(ss)
-
-
 def handling_year(str_cron):
     if len(str_cron.split(" ")) > 5:
         print("there's a year!")
@@ -89,22 +82,35 @@ def handling_year(str_cron):
     return str_cron
 
 
-def handling_w(str_cron):
+def handling_l(str_cron):
     global calendar_obj, date_return
-    if "W" in str_cron:
+    ss = str_cron.split(' ')
+    if 'L' == ss[2]:
+        for month in range(1, 13):
+            date_return.append(dt.date(today.year, month, cl.monthrange(today.year, month)[1]))
+            date_return.append(dt.date(today.year - 1, month, cl.monthrange(today.year - 1, month)[1]))
+        return str_cron.replace("L", "*")
+    elif 'L' in ss[2]:
         day_of_month = str_cron.split(" ")[-3]
         print("dm", day_of_month)
         print(date_return)
         weekdy, nothing = list(day_of_month)
         for month in range(1, 13):
+            day = []
+            for x in cl.monthcalendar(today.year-1, month):
+                print("pp", x)
+                day.append(x[int((int(weekdy) - 2) % 7)])
+            date_return.append(dt.date(today.year - 1, month, max(day)))
             for x in cl.monthcalendar(today.year, month):
                 print("p", x)
-                day = x[int((int(weekdy) - 2) % 7)]
-            date_return.append(dt.date(today.year, month, day))
-        print(date_return)
+                day.append(x[int((int(weekdy) - 2) % 7)])
+            date_return.append(dt.date(today.year, month, max(day)))
+        print("r", date_return)
         return str_cron.replace(day_of_month, "*")
-    else:
-        return str_cron
+      date_return.append(dt.date(today.year - 1, month, max(day)))date_return.append(dt.date(today.year - 1, month, max(day)))date_return.append(dt.date(today.year - 1, month, max(day)))date_return.append(dt.date(today.year - 1, month, max(day)))if 'L' in ss[4]:
+        ss[4] = "7"
+    return ' '.join(ss)
+
 
 
 def handling_slash(str_cron):
@@ -112,7 +118,7 @@ def handling_slash(str_cron):
 
 
 # try:
-input_lst = "0 23 7 * * 6#3 2023".strip()
+input_lst = "0 23 7 2L * * 2023".strip()
 print("in", input_lst)
 str_cron = handling_seconds(input_lst)
 print("s", str_cron)
@@ -124,8 +130,8 @@ str_cron = handling_year(str_cron)
 print("y", years)
 str_cron = handling_hash_marks(str_cron)
 print("h", str_cron)
-str_cron = handling_w(str_cron)
-print("w", str_cron)
+str_cron = handling_l(str_cron)
+print("l", str_cron)
 cron_exp = cc.Cron(str_cron)
 # L
 # slashes
@@ -137,7 +143,7 @@ dates = []
 # today.date() >
 date = today
 
-if "#" in input_lst or "W" in input_lst:
+if "#" in input_lst or "L" in input_lst:
     #while loop for as long as date is equal to or after start date
     for i in date_return:
         print("ii", i)
