@@ -7,7 +7,7 @@ today = dt.datetime.now()
 
 calendar_obj = cl.Calendar()
 
-today = dt.datetime(2024, 1, 2, 10, 30, 00)
+today = dt.datetime(2024, 1, 4, 10, 30, 00)
 
 days_30 = today + dt.timedelta(days=-30, hours=0)
 
@@ -111,6 +111,33 @@ def handling_l(str_cron):
         ss[4] = "7"
     return ' '.join(ss)
 
+def handling_w(str_cron):
+    w_use = str_cron.split(" ")[2]
+    if 'W' in w_use:
+        num = int(w_use[:-1])
+        diffs = {}
+        for month in range(1, 13):
+            check_date  = dt.date(year = today.year, month = month, day = num)
+            days_2 = check_date + dt.timedelta(days=-2, hours=0)
+            for i in range(5):
+                if days_2.month == check_date.month and days_2.weekday() < 4:
+                    diffs[abs(days_2.day - num)] = days_2
+                days_2 += dt.timedelta(days=1, hours=0)
+            date_return.append(diffs[min(list(diffs.keys()))])
+            diffs = {}
+        for month in range(1, 13):
+            check_date  = dt.date(year = today.year - 1, month = month, day = num)
+            days_2 = check_date + dt.timedelta(days=-2, hours=0)
+            for i in range(5):
+                if days_2.month == check_date.month and days_2.weekday() < 4:
+                    diffs[abs(days_2.day - num)] = days_2
+                days_2 += dt.timedelta(days=1, hours=0)
+            date_return.append(diffs[min(list(diffs.keys()))])
+            diffs = {}
+        return str_cron.replace(w_use,'*')
+
+    else:
+        return str_cron
 
 
 def handling_slash(str_cron):
@@ -118,7 +145,7 @@ def handling_slash(str_cron):
 
 
 # try:
-input_lst = "0 23 7 2L * * 2023".strip()
+input_lst = "0 23 7 2W * *".strip()
 print("in", input_lst)
 str_cron = handling_seconds(input_lst)
 print("s", str_cron)
@@ -132,6 +159,8 @@ str_cron = handling_hash_marks(str_cron)
 print("h", str_cron)
 str_cron = handling_l(str_cron)
 print("l", str_cron)
+str_cron = handling_w(str_cron)
+print("w", str_cron)
 cron_exp = cc.Cron(str_cron)
 # L
 # slashes
@@ -143,7 +172,7 @@ dates = []
 # today.date() >
 date = today
 
-if "#" in input_lst or "L" in input_lst:
+if "#" in input_lst or "L" in input_lst or "W" in input_lst:
     #while loop for as long as date is equal to or after start date
     for i in date_return:
         print("ii", i)
@@ -165,6 +194,7 @@ else:
             dates.append(date)
 
 print(len(dates), dates)
+print(date_return)
 
 # except Exception as E:
 #     print(E)
