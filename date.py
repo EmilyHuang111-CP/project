@@ -71,8 +71,14 @@ def handling_month_names(str_cron):
 
 
 def handling_l(str_cron):
-    str_cron.split()
-    pass
+    ss = str_cron.split(' ')
+    if 'L' == ss[2]:
+        print("L only in day of month")
+    elif 'L' in ss[2]:
+        print("L in day of month")
+    elif 'L' in ss[4]:
+        ss[4] = "7"
+    return ' '.join(ss)
 
 
 def handling_year(str_cron):
