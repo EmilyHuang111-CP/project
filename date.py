@@ -107,7 +107,7 @@ def handling_l(str_cron):
             date_return.append(dt.date(today.year, month, max(day)))
         print("r", date_return)
         return str_cron.replace(day_of_month, "*")
-      date_return.append(dt.date(today.year - 1, month, max(day)))date_return.append(dt.date(today.year - 1, month, max(day)))date_return.append(dt.date(today.year - 1, month, max(day)))date_return.append(dt.date(today.year - 1, month, max(day)))if 'L' in ss[4]:
+    if 'L' in ss[4]:
         ss[4] = "7"
     return ' '.join(ss)
 
