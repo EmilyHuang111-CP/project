@@ -41,6 +41,7 @@ def handling_question_marks(input_l):
 
 def handling_hash_marks(input_l):
     global date_return, calendar_obj
+    print("i", input_l)
     if "#" in input_l:
         print(input_l)
         day_of_week = input_l.split(" ")[-1]
@@ -79,20 +80,21 @@ def handling_year(str_cron):
         print("there's a year!")
         years.append(str_cron.split(" ")[-1].split(","))
         str_cron = " ".join(str_cron.split(" ")[:-1])
-        return str_cron
+    return str_cron
 
 
 def handling_w(str_cron):
     global calendar_obj, date_return
     if "W" in str_cron:
-        day_of_month = str_cron.split(" ")[-4]
-        print(day_of_month)
+        day_of_month = str_cron.split(" ")[-3]
+        print("dm", day_of_month)
         print(date_return)
         weekdy, nothing = list(day_of_month)
         for month in range(1, 13):
             for x in cl.monthcalendar(today.year, month):
+                print("p", x)
                 day = x[int((int(weekdy) - 2) % 7)]
-            date_return.append(dt.date(day))
+            # date_return.append(dt.date(day))
         print(date_return)
         return str_cron.replace(day_of_month, "*")
     else:
@@ -103,51 +105,54 @@ def handling_slash(str_cron):
     pass
 
 
-try:
-    input_lst = ("0 23 7 * * 6#3 2024").strip()
-    print("i", input_lst)
-    str_cron = handling_seconds(input_lst)
-    print("s", str_cron)
-    str_cron = handling_question_marks(str_cron)
-    print("q", str_cron)
-    str_cron = handling_month_names(str_cron)
-    print("m", str_cron)
-    str_cron = handling_year(str_cron)
-    print("y", years)
-    str_cron = handling_hash_marks(str_cron)
-    print("h", str_cron)
-    str_cron = handling_w(str_cron)
-    print("w", str_cron)
-    cron_exp = cc.Cron(str_cron)
-    # L
-    # slashes
-    # W
-    
-    dates = []
-    
-    # 0 30 9 * * 6#3
-    # today.date() >
-    date = today
-    
-    if "#" in str_cron:
-        #while loop for as long as date is equal to or after start date
-        for i in date_return:
+# try:
+input_lst = "0 23 7 2W * *".strip()
+print("in", input_lst)
+str_cron = handling_seconds(input_lst)
+print("s", str_cron)
+str_cron = handling_question_marks(str_cron)
+print("q", str_cron)
+str_cron = handling_month_names(str_cron)
+print("m", str_cron)
+str_cron = handling_year(str_cron)
+print("y", years)
+str_cron = handling_hash_marks(str_cron)
+print("h", str_cron)
+str_cron = handling_w(str_cron)
+print("w", str_cron)
+cron_exp = cc.Cron(str_cron)
+# L
+# slashes
+# W
+
+dates = []
+
+# 0 30 9 * * 6#3
+# today.date() >
+date = today
+
+if "#" in str_cron:
+    #while loop for as long as date is equal to or after start date
+    for i in date_return:
+        print(i)
+        if today.date() > i > start_date.date():
             print(i)
-            if today.date() > i > start_date.date():
-                print(i)
-                dates.append(i)
-    else:
-        while date > start_date:
-            print(date)
-            print(date.year)
-            print(years)
-            schedule = cron_exp.schedule(date)
-            prev_date = schedule.prev()
-            date = prev_date
+            dates.append(i)
+else:
+    while date > start_date:
+        print(date)
+        print(date.year)
+        print(years)
+        schedule = cron_exp.schedule(date)
+        prev_date = schedule.prev()
+        date = prev_date
+        if years:
             if str(date.year) in years[0]:
                 dates.append(date)
-    
-    print(len(dates), dates)
+        else:
+            dates.append(date)
 
-except Exception as E:
-    print(E)
+print(len(dates), dates)
+
+# except Exception as E:
+#     print(E)
