@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from locator import active_facility_id_name, match_facility_name, match_institution_name, match_institution_id
 from plotly_graph import *
+import webbrowser
 
 # Function to filter combobox options based on input
 def search(event):
@@ -36,7 +37,7 @@ def click():
 
 # Create main window
 root = tk.Tk()
-root.geometry("1000x700")
+root.geometry("1000x1000")
 root.title("Facility Statistics")
 
 # Retrieve active facility IDs and names
@@ -83,7 +84,15 @@ img = ImageTk.PhotoImage(img)
 image_label = tk.Label(root, image=img)
 image_label.pack(pady=20)
 
+
+def callback(url):
+   webbrowser.open_new_tab(url)
+
+#Create a Label to display the link
+link = Label(root, text="http://127.0.0.1:5400/",font=('Helveticabold', 15), fg="blue", cursor="hand2")
+link.pack()
+link.bind("<Button-1>", lambda e:
+callback("http://127.0.0.1:5400/"))
+
 # Start the main tkinter event loop
 root.mainloop()
-
-
