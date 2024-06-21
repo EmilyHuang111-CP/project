@@ -22,7 +22,7 @@ def get_occurrences(rrule_string, dtstart_string):
                 if occurrence > now:
                     break
                 total += 1
-                #print(occurrence)
+                print(occurrence)
         print(total)
 
     except Exception as err:
@@ -31,4 +31,4 @@ def get_occurrences(rrule_string, dtstart_string):
 
 
 # Test:
-get_occurrences('RRULE:FREQ=DAILY;BYHOUR=10;BYMINUTE=00', 'DTSTART:20230105T091200Z')
+get_occurrences('RRULE:FREQ=MONTHLY;UNTIL=20250501T235900Z;BYMONTHDAY=01;BYHOUR=00;BYMINUTE=00','RT:20240115T090000Z')
