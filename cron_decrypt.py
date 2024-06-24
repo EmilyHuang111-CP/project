@@ -1,5 +1,6 @@
 import croniter as cr
 import datetime as dt
+from dateutil import parser
 
 years = []  # initializing list of acceptable years
 w_list = []  # initializing list of acceptable days if W is used
@@ -120,7 +121,8 @@ def handling_w(str_cron):
     return str_cron.replace(w_use, '*')
 
 
-def count_cron_occurrences(str_cron):
+def count_cron_occurrences(str_cron, start_date):
+    start_date = parser.parse(start_date)
     str_cron = handling_question_marks(str_cron)
     str_cron = handling_years(str_cron)
     str_cron = handling_seconds(str_cron)
@@ -128,6 +130,8 @@ def count_cron_occurrences(str_cron):
     str_cron = handling_w(str_cron)
 
     days_30 = now + dt.timedelta(days=-30, hours=0)
+    if start_date > days_30:
+        days_30 = start_date
 
     first_occurrence = cr.croniter(str_cron, days_30)
     occurrences_set = {}
@@ -159,15 +163,15 @@ def count_cron_occurrences(str_cron):
     # for occurrence in occurrences_set:
     #     print(occurrence)
     # print(count)
-    return occurrences_set
+    # return occurrences_set
     # if you want the count as well
-    # return occurrences_set, count
+    return occurrences_set, count
 
 
-# Example usage:
-str_cron = '0/30 30 */3 13W * ? 2020-2024'
+# Test:
+str_cron = '0 30 9 * * ?'
 try:
-    print(count_cron_occurrences(str_cron))
+    print(count_cron_occurrences(str_cron, '6/13/2024 0:00:56'))
 except Exception as err:
     print("Error:" + str(err) + "\nwith " + str_cron)
 #  use new_set = set1.union(set2) to join all the sets
