@@ -11,6 +11,7 @@ def handling_question_marks(str_cron):
     return str_cron.replace("?", "*")
 
 
+# Checks if there are years in the expression. If there are, creates a list of acceptable years.
 def handling_years(str_cron):
     global years
     check = 0
@@ -55,6 +56,7 @@ def handling_years(str_cron):
     return str_cron
 
 
+# If there are seconds in the expression, it puts them at the end because that's how croniter takes them
 def handling_seconds(str_cron):
     split_cron = str_cron.split(' ')
     if len(split_cron) > 5:
@@ -65,7 +67,8 @@ def handling_seconds(str_cron):
     return str_cron
 
 
-def handling_l(str_cron):
+# Handles L
+def handling_day_of_week(str_cron):
     split_cron = str_cron.split(' ')
     if split_cron[4] == '1':
         split_cron[4] = 'SUN'
@@ -121,7 +124,7 @@ def count_cron_occurrences(str_cron):
     str_cron = handling_question_marks(str_cron)
     str_cron = handling_years(str_cron)
     str_cron = handling_seconds(str_cron)
-    str_cron = handling_l(str_cron)
+    str_cron = handling_day_of_week(str_cron)
     str_cron = handling_w(str_cron)
 
     days_30 = now + dt.timedelta(days=-30, hours=0)
