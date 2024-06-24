@@ -1,11 +1,15 @@
 import croniter as cr
 import datetime as dt
-years = []
-w_list = []
+
+years = []  # initializing list of acceptable years
+w_list = []  # initializing list of acceptable days if W is used
 now = dt.datetime.now()
 
+
+# Handles question marks because croniter treats * like ?
 def handling_question_marks(str_cron):
     return str_cron.replace("?", "*")
+
 
 def handling_years(str_cron):
     global years
@@ -44,10 +48,12 @@ def handling_years(str_cron):
             else:
                 years.append(int(x))
         str_cron = " ".join(split_cron[:-1])
-    #This will not work if there is nothign entered for seconds but something for years since years is optional and seconds aren't
+    # This will not work if there is nothing entered for seconds but something for years since years is optional and
+    # seconds aren't
     if len(split_cron) > 6 and split_cron[-1] == '*':
         str_cron = " ".join(split_cron[:-1])
     return str_cron
+
 
 def handling_seconds(str_cron):
     split_cron = str_cron.split(' ')
@@ -112,6 +118,12 @@ def handling_w(str_cron):
 
 
 def count_cron_occurrences(str_cron):
+    str_cron = handling_question_marks(str_cron)
+    str_cron = handling_years(str_cron)
+    str_cron = handling_seconds(str_cron)
+    str_cron = handling_l(str_cron)
+    str_cron = handling_w(str_cron)
+
     days_30 = now + dt.timedelta(days=-30, hours=0)
 
     first_occurrence = cr.croniter(str_cron, days_30)
@@ -141,21 +153,18 @@ def count_cron_occurrences(str_cron):
                 else:
                     occurrences_set.add(next_date)
                     count += 1
-    for occurrence in occurrences_set:
-        print(occurrence)
-    print(count)
-
+    # for occurrence in occurrences_set:
+    #     print(occurrence)
+    # print(count)
+    return occurrences_set
+    # if you want the count as well
+    # return occurrences_set, count
 
 
 # Example usage:
 str_cron = '0/30 30 */3 13W * ? 2020-2024'
 try:
-    str_cron = handling_question_marks(str_cron)
-    str_cron = handling_years(str_cron)
-    str_cron = handling_seconds(str_cron)
-    str_cron = handling_l(str_cron)
-    str_cron = handling_w(str_cron)
-    count_cron_occurrences(str_cron)
+    print(count_cron_occurrences(str_cron))
 except Exception as err:
     print("Error:" + str(err) + "\nwith " + str_cron)
 #  use new_set = set1.union(set2) to join all the sets
