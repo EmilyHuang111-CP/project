@@ -1,8 +1,8 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 from locator import active_facility_id_name, match_facility_name, match_institution_name, match_institution_id
-from plotly_graph import *
-import webbrowser
+from PIL import Image, ImageTk
+from g import *
 
 # Function to filter combobox options based on input
 def search(event):
@@ -17,32 +17,45 @@ def search(event):
         drop['values'] = data  # Set filtered options based on search input
 
 # Function to handle 'Find' button click
+
+def update_graph(input_str):
+    # Create the Plotly graph and get the image buffer
+    image_buf = init(input_str)
+
+    # Load the image from the buffer
+    img = Image.open(image_buf)
+    img = ImageTk.PhotoImage(img)
+
+    return img
+
+
+
+
 def click():
     label2_text.set("")
     sv = var.get().strip()
     selected_value = int(sv.split(" ")[0])
-    try:
-        facility_name_var.set(f"{match_facility_name(selected_value)}")
-        institution_name_var.set(f"{match_institution_name(selected_value)}")
-        institution_id_var.set(f"{match_institution_id(selected_value)}")
+    facility_name_var.set(f"{match_facility_name(selected_value)}")
+    institution_name_var.set(f"{match_institution_name(selected_value)}")
+    institution_id_var.set(f"{match_institution_id(selected_value)}")
 
-        # Update label2 text
-        label2_text.set(f"Facility Name: {facility_name_var.get()}   Facility ID: {selected_value}   Institution Name: {institution_name_var.get()}   Institution ID: {institution_id_var.get()}")
-
-        # Show label2
-        label2.pack()
-    except:
-        messagebox.showwarning("Entry not found", f"{selected_value} is not available as a facility.")
-
-
-
+    # Update label2 text
+    label2_text.set(f"Facility Name: {facility_name_var.get()}   Facility ID: {selected_value}   Institution Name: {institution_name_var.get()}   Institution ID: {institution_id_var.get()}")
+    update_graph(selected_value)
+    # Show label2
+    label2.pack()
+    # except Exception as e:
+    #     print(e)
+    #     messagebox.showwarning("Entry not found", f"{sv} is not available as a facility.")
 
 
 # Create main window
 root = tk.Tk()
-root.geometry("1000x1000")
+root.geometry("1000x700")
 root.title("Facility Statistics")
 
+# input_str = "1152"
+input_str = "all"
 # Retrieve active facility IDs and names
 options = active_facility_id_name()
 
@@ -50,7 +63,7 @@ options = active_facility_id_name()
 frame1 = tk.Frame(root)
 frame1.pack(pady=20)
 
-label = tk.Label(frame1, text="Please type in the facility id (numerical digits only):")
+label = tk.Label(frame1, text="Please choose a facility:")
 label.pack()
 
 var = tk.StringVar()
@@ -76,26 +89,11 @@ label2_text = tk.StringVar()
 
 label2 = tk.Label(frame2, textvariable=label2_text, wraplength=700)
 
-# Create the Plotly graph and get the image buffer
-image_buf = create_plotly_graph()
-
-# Load the image from the buffer
-img = Image.open(image_buf)
-img = ImageTk.PhotoImage(img)
-
+img = update_graph(input_str)
 # Create a label to display the image
 image_label = tk.Label(root, image=img)
 image_label.pack(pady=20)
 
-
-def display_graph(url):
-   webbrowser.open_new_tab(url)
-
-#Create a Label to display the link
-link = Label(root, text="http://127.0.0.1:5400/",font=('Helveticabold', 15), fg="blue", cursor="hand2")
-link.pack()
-link.bind("<Button-1>", lambda e:
-display_graph("http://127.0.0.1:5400/"))
-
 # Start the main tkinter event loop
 root.mainloop()
+
