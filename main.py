@@ -32,7 +32,10 @@ def click():
         # Show label2
         label2.pack()
     except:
-        messagebox.showwarning("Entry not found", f"{sv} is not available as a facility.")
+        messagebox.showwarning("Entry not found", f"{selected_value} is not available as a facility.")
+
+
+
 
 
 # Create main window
@@ -47,7 +50,7 @@ options = active_facility_id_name()
 frame1 = tk.Frame(root)
 frame1.pack(pady=20)
 
-label = tk.Label(frame1, text="Please choose a facility:")
+label = tk.Label(frame1, text="Please type in the facility id (numerical digits only):")
 label.pack()
 
 var = tk.StringVar()
@@ -85,14 +88,14 @@ image_label = tk.Label(root, image=img)
 image_label.pack(pady=20)
 
 
-def callback(url):
+def display_graph(url):
    webbrowser.open_new_tab(url)
 
 #Create a Label to display the link
 link = Label(root, text="http://127.0.0.1:5400/",font=('Helveticabold', 15), fg="blue", cursor="hand2")
 link.pack()
 link.bind("<Button-1>", lambda e:
-callback("http://127.0.0.1:5400/"))
+display_graph("http://127.0.0.1:5400/"))
 
 # Start the main tkinter event loop
 root.mainloop()
