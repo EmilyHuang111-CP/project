@@ -17,20 +17,21 @@ column3_data = df["institution_id"]
 column4_data = df["institution_name"]
 
 
-#define the match function
+#find the institution id based on the facility id
 def match_institution_id(facility_id):
     filtered_df = df[df['facility_id'] == facility_id]
     institution_id = filtered_df.iloc[:, -2:-1].values[0]
 
     return institution_id[0]
 
-
+#find the institution name based on the facility id
 def match_institution_name(facility_id):
     filtered_df = df[df['facility_id'] == facility_id]
 
     institution_name = filtered_df.iloc[:, -1:].values[0]
     return institution_name[0]
 
+#find the facility name based on the facility id
 def match_facility_name(facility_id):
     filtered_df = df[df['facility_id'] == facility_id]
     facility_name = filtered_df.iloc[:, -3:-1].values[0]
