@@ -162,10 +162,10 @@ def count_cron_occurrences(str_cron, start_date):
                     count += 1
     # for occurrence in occurrences_set:
     #     print(occurrence)
-    # print(count)
+    print(count)
     # return occurrences_set
     # if you want the count as well
-    return occurrences_set, count
+    # return occurrences_set, count
 
 
 # Test:
